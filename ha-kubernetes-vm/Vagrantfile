@@ -1,88 +1,28 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
-  config.vm.define "ubuntu-vm-01" do |vm1|
-    vm1.vm.hostname = "ubuntu-vm"
-    vm1.vm.box = "bento/ubuntu-22.04"
-    vm1.vm.network "private_network", ip: "192.168.56.2"
-    
-    vm1.vm.provider "virtualbox" do |vb|
-      vb.name = "ubuntu-vm-01"
-      vb.gui = false
-      vb.memory = "1024"
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
+Vagrant.configure(2) do |config|
+
+  config.vm.provision "shell", path: "bootstrap.sh"
+
+  NodeCount = 2
+
+  (1..NodeCount).each do |i|
+    config.vm.define "node0#{i}" do |node|
+      node.vm.box = "bento/ubuntu-22.04"
+      node.vm.hostname = "node0#{i}"
+      node.vm.network "private_network", ip: "192.168.56.1#{i}"
+      node.vm.provider "virtualbox" do |v|
+        v.name = "node0#{i}"
+        v.memory = 2048
+        v.cpus = 1
+      end
+      vm1.vm.provision "shell", run: "always", inline: <<-SHELL
+          echo "Hello from the Ubuntu VM"
+      SHELL
     end
-
-    vm1.vm.provision "shell", run: "always", inline: <<-SHELL
-        echo "Hello from the Ubuntu VM"
-    SHELL
   end
-
-  config.vm.define "ubuntu-vm-02" do |vm1|
-    vm1.vm.hostname = "ubuntu-vm-02"
-    vm1.vm.box = "bento/ubuntu-22.04"
-    vm1.vm.network "private_network", ip: "192.168.56.3"
-    
-    vm1.vm.provider "virtualbox" do |vb|
-      vb.name = "ubuntu-vm-02"
-      vb.gui = false
-      vb.memory = "1024"
-    end
-
-    vm1.vm.provision "shell", run: "always", inline: <<-SHELL
-        echo "Hello from the Ubuntu VM"
-    SHELL
-  end
-  
-  config.vm.define "ubuntu-vm-03" do |vm1|
-    vm1.vm.hostname = "ubuntu-vm-03"
-    vm1.vm.box = "bento/ubuntu-22.04"
-    vm1.vm.network "private_network", ip: "192.168.56.4"
-    
-    vm1.vm.provider "virtualbox" do |vb|
-      vb.name = "ubuntu-vm-02"
-      vb.gui = false
-      vb.memory = "1024"
-    end
-
-    vm1.vm.provision "shell", run: "always", inline: <<-SHELL
-        echo "Hello from the Ubuntu VM"
-    SHELL
-  end
-
-  
-  config.vm.define "ubuntu-vm-04" do |vm1|
-    vm1.vm.hostname = "ubuntu-vm-04"
-    vm1.vm.box = "bento/ubuntu-22.04"
-    vm1.vm.network "private_network", ip: "192.168.56.5"
-    
-    vm1.vm.provider "virtualbox" do |vb|
-      vb.name = "ubuntu-vm-02"
-      vb.gui = false
-      vb.memory = "1024"
-    end
-
-    vm1.vm.provision "shell", run: "always", inline: <<-SHELL
-        echo "Hello from the Ubuntu VM"
-    SHELL
-  end
-
-
-  config.vm.define "ubuntu-vm-05-ha-proxy" do |vm1|
-    vm1.vm.hostname = "ubuntu-vm-5-ha-proxy"
-    vm1.vm.box = "bento/ubuntu-22.04"
-    vm1.vm.network "private_network", ip: "192.168.56.6"
-    
-    vm1.vm.provider "virtualbox" do |vb|
-      vb.name = "ubuntu-vm-02"
-      vb.gui = false
-      vb.memory = "1024"
-    end
-
-    vm1.vm.provision "shell", run: "always", inline: <<-SHELL
-        echo "Hello from the Ubuntu VM"
-    SHELL
-  end
-
 
 end
