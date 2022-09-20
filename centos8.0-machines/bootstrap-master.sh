@@ -6,4 +6,4 @@ python3 -m pip install --user ansible==2.8
 sudo ln -s /usr/local/bin/ansible /usr/bin/ansible
 
 echo "[TASK 2] Install Git"
-dnf install git -y
+yum install git -y
