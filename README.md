@@ -1,5 +1,4 @@
 ## Welcome to my place
-#### Vagrant anotations
 
 [Linkedin](https://www.linkedin.com/isweluiz)
 
