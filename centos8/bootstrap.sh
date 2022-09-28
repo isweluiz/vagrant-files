@@ -19,14 +19,13 @@ timedatectl set-timezone 'Europe/Dublin'
 
 echo "[TASK 5] Clean package cache"
 dnf clean all 
-#rm -rf /var/cache/dnf
-#sed -i 's/mirrorlist/#mirrorlist/g' /etc/dnf.repos.d/CentOS-*
-#sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/dnf.repos.d/CentOS-*
+#rm -rf /var/cache/yum
+#sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+#sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
 echo "[TASK 6] Clean package cache & update"
-dnf update -y 
-dnf install python3.9 -y
-dnf install vim -y
+#dnf update -y 
+dnf install python3.9 jq vim -y
 
 #echo "[TASK 7] Configure ssh-pub key"
 #mkdir /root/.ssh/
